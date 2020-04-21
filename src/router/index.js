@@ -57,7 +57,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const roleUser = store.state.role
+  const roleUser = store.state.auth.role
   const requireAuthor = to.matched.some(item => item.meta.author)
   const requireAuth = to.matched.some(item => item.meta.auth)
 

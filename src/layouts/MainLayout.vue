@@ -5,9 +5,9 @@
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
-                <router-link to="/login" class="button is-primary is-outlined" v-if="!role">Войти</router-link>
-                <router-link to="/create-post" class="button is-info" :disabled="hideBtn" v-if="role === 'writer'">Создать пост</router-link>
-                <button class="button is-primary is-outlined" v-if="role === 'writer' || role === 'reader'" @click="exit">Выйти</button>
+                <router-link to="/login" class="button is-primary is-outlined" v-if="!auth.role">Войти</router-link>
+                <router-link to="/create-post" class="button is-info" :disabled="hideBtn" v-if="auth.role === 'writer'">Создать пост</router-link>
+                <button class="button is-primary is-outlined" v-if="auth.role === 'writer' || auth.role === 'reader'" @click="exit">Выйти</button>
               </div>
             </div>
           </div>
@@ -25,7 +25,7 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState([
-      'role'
+      'auth'
     ]),
     hideBtn () {
       return this.$route.path === '/create-post'

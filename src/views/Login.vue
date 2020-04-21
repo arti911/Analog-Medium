@@ -3,40 +3,43 @@
     <div class="login">
       <form class="login__form" @submit.prevent="login">
         <h1 class="title">Войти в систему</h1>
-        <p v-if="error" class="error">Введенные адрес электронной почты и пароль не совпадают с сохраненными в нашей базе данных. Проверьте правильность введенных данных и повторите попытку.</p>
+        <p v-if="auth.errorAuth" class="error">Введенные адрес электронной почты и пароль не совпадают с сохраненными в нашей базе данных. Проверьте правильность введенных данных и повторите попытку.</p>
         <b-field label="Email">
           <b-input type="email" v-model="email" />
         </b-field>
         <b-field label="Password">
           <b-input type="password" v-model.number="password" />
         </b-field>
-        <b-button class="is-fullwidth is-medium is-rounded is-info" @click.prevent="login" :disabled="email === '' || password === ''">Войти</b-button>
+        <button class="button is-fullwidth is-medium is-rounded is-info" :disabled="!disabledBtn">Войти</button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
       email: '',
-      password: '',
-      error: false
+      password: ''
+    }
+  },
+  computed: {
+    ...mapState([
+      'auth'
+    ]),
+    disabledBtn () {
+      return this.email !== '' && this.password !== ''
     }
   },
   methods: {
-    login () {
-      this.$store.dispatch('LOGIN', {
+    async login () {
+      await this.$store.dispatch('LOGIN', {
         email: this.email,
         password: this.password
       })
-        .then(success => {
-          success ? this.$router.push('/posts') : this.error = true
-        })
-        .catch(error => {
-          this.error = error
-        })
     }
   }
 }

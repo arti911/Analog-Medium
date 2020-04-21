@@ -5,9 +5,6 @@ import router from './router'
 import store from './store'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
-import axios from 'axios'
-
-Vue.prototype.$http = axios
 
 Vue.use(Buefy)
 
